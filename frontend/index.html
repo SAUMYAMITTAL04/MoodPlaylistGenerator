@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Playlist Generator</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome to the Mood Playlist Generator!</h1>
+        <p>Select your mood, and we’ll generate the perfect playlist for you.</p>
+
+        <div class="mood-buttons">
+            <button onclick="generatePlaylist('happy')">Happy Playlist</button>
+            <button onclick="generatePlaylist('sad')">Sad Playlist</button>
+            <button onclick="generatePlaylist('energetic')">Energetic Playlist</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mood Playlist Generator</p>
+    </footer>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
