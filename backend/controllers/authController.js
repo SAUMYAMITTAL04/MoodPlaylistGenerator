@@ -1,8 +1,6 @@
 const User = require('../models/user'); // Assuming you have a User model
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Login function
 // Login function
 exports.login = async (req, res) => {
     const { username, password } = req.body;
@@ -14,17 +12,8 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'User not found' });
         }
 
-        // Debugging: Check the entered password and the stored hash
-        console.log('Entered password:', password);
-        console.log('Stored password hash:', user.password);
-
-        // Compare password
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        // Debugging: Log the result of password comparison
-        console.log('Password match:', isMatch);
-
-        if (!isMatch) {
+        // Directly compare the plain text passwords
+        if (user.password !== password) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
@@ -41,7 +30,6 @@ exports.login = async (req, res) => {
     }
 };
 
-
 // Signup function
 exports.signup = async (req, res) => {
     const { username, email, password } = req.body;
@@ -53,14 +41,11 @@ exports.signup = async (req, res) => {
             return res.status(400).json({ message: 'Username already exists' });
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create the user
+        // Create the user with plain text password
         const newUser = new User({
             username,
             email,
-            password: hashedPassword,
+            password, // Save the password as plain text
         });
 
         // Save the user to the database

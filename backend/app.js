@@ -2,9 +2,10 @@ require('dotenv').config();  // Ensure environment variables are loaded
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 // Import routes
-const authRoutes = require('./routes/auth'); 
+const authRoutes = require('./routes/auth');
 const moodRoutes = require('./routes/mood');
 const playlistRoutes = require('./routes/playlist');
 
@@ -44,6 +45,14 @@ app.use('/api/playlist', playlistRoutes);  // Playlist routes
 // Example protected route (for testing user profile access)
 app.get('/api/profile', verifyToken, (req, res) => {
     res.json({ message: 'User profile', user: req.user });
+});
+
+// Serve static files from the 'frontend' directory
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+// Catch-all route to serve index.html for any unknown requests (frontend routes)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
 });
 
 // Test route (you can expand this later)

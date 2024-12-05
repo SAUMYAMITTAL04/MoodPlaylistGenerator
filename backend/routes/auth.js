@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcryptjs'); // Use bcryptjs for hashing
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const router = express.Router();
@@ -21,12 +20,8 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'Username already taken' });
         }
 
-        // Create a new user
+        // Create a new user without hashing the password
         const newUser = new User({ username, email, password });
-
-        // Hash the password before saving to the database
-        const salt = await bcrypt.genSalt(10);
-        newUser.password = await bcrypt.hash(password, salt);
 
         // Save the user to the database
         await newUser.save();
@@ -44,26 +39,30 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
+        // Debugging: log JWT_SECRET to check if it's being loaded correctly
+        console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
         // Find user by username
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(400).json({ message: 'Username does not exist' });
         }
 
-        // Compare the password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
+        // Directly compare the plain-text passwords
+        if (user.password !== password) {
             return res.status(400).json({ message: 'Incorrect password' });
         }
 
-        // Create JWT
+        // Create JWT token
         const token = jwt.sign(
             { userId: user._id, username: user.username },
-            process.env.JWT_SECRET, // Use the secret key from .env
-            { expiresIn: '1h' } // Token expires in 1 hour
+            process.env.JWT_SECRET,  // Ensure the JWT secret key is loaded correctly
+            { expiresIn: '1h' }  // Token expires in 1 hour
         );
 
         console.log('Login Successful:', { username: user.username }); // Debugging log
+
+        // Send response with token and user details
         res.status(200).json({ 
             message: 'Login successful', 
             token, 
