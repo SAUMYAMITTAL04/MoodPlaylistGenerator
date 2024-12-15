@@ -3,8 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Mood Playlist Generator</title>
+    <title>Your Profile - Mood Playlist Generator</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            background-color: #040f1b;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        header nav ul li {
+            margin: 0 10px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header h1 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .profile-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .playlists {
+            margin-bottom: 30px;
+        }
+
+        .playlist-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .playlist {
+            background-color: #3bd0fa;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            width: calc(50% - 10px);
+        }
+
+        .playlist h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .playlist a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #3e93e7;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .uploaded-songs ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .uploaded-songs ul li {
+            background-color: #f1f1f1;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px;
+            background-color: #c6e7ff;
+            color: #fff;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .playlist {
+                width: calc(100% - 10px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .playlist {
+                width: 100%;
+            }
+
+            .profile-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .profile-header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,31 +139,177 @@
             </ul>
         </nav>
     </header>
-
+    
     <main>
-        <h1>Your Profile</h1>
-
-        <h2>Account Information</h2>
-        <p><strong>Username:</strong> user123</p>
-        <p><strong>Email:</strong> user123@example.com</p>
-
-        <h2>Your Playlists</h2>
-        <ul>
-            <li><a href="playlist.html">Happy Playlist</a></li>
-            <li><a href="playlist.html">Sad Playlist</a></li>
-        </ul>
-
-        <h2>Uploaded Songs</h2>
-        <ul>
-            <li>Song 1</li>
-            <li>Song 2</li>
-        </ul>
+        <section class="profile-header">
+            <div class="profile-info">
+                <h1>Welcome, <span id="username">User123</span>!</h1>
+            </div>
+        </section>
+    
+        <section class="playlists">
+            <h2>Your Playlists</h2>
+            <div class="playlist-container">
+                <div class="playlist">
+                    <h3>Party</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+                <div class="playlist">
+                    <h3>Hopeful</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+                <div class="playlist">
+                    <h3>Nostalgic</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+                <div class="playlist">
+                    <h3>Proud</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+                <div class="playlist">
+                    <h3>Loving</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+                <div class="playlist">
+                    <h3>Passionate</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+                <div class="playlist">
+                    <h3>Random</h3>
+                    <a href="playlist.html">View Playlist</a>
+                </div>
+            </div>
+        </section>
+    
+        <section class="uploaded-songs">
+            <h2>Your Uploaded Songs</h2>
+            <ul>
+                <li>Song 1</li>
+                <li>Song 2</li>
+                <li>Song 3</li>
+                <li>Song 4</li>
+                <li>Song 5</li>
+            </ul>
+        </section>
+        <section class="upload-song">
+            <h2>Upload a New Song</h2>
+            <form id="uploadSongForm" enctype="multipart/form-data">
+                <div>
+                    <label for="songTitle">Title:</label>
+                    <input type="text" id="songTitle" name="title" required>
+                </div>
+                <div>
+                    <label for="songArtist">Artist:</label>
+                    <input type="text" id="songArtist" name="artist" required>
+                </div>
+                <div>
+                    <label for="songMood">Mood:</label>
+                    <input type="text" id="songMood" name="mood" required>
+                </div>
+                <div>
+                    <label for="songFile">MP3 File:</label>
+                    <input type="file" id="songFile" name="file" accept=".mp3" required>
+                </div>
+                <button type="submit">Upload Song</button>
+            </form>
+            <p id="uploadMessage" style="color: red;"></p>
+        </section>
+        
     </main>
-
+    
     <footer>
-        <p>&copy; 2024 Mood Playlist Generator</p>
+        <div class="footer-container">
+            <p>&copy; 2024 Mood Playlist Generator. All rights reserved.</p>
+        </div>
     </footer>
+    <script >
+    async function fetchProfileData() {
+        try {
+            const response = await fetch('http://localhost:5000/api/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming JWT token is stored in localStorage
+                }
+            });
 
-    <script src="assets/js/app.js"></script>
+            if (!response.ok) {
+                throw new Error('Failed to fetch profile data');
+            }
+
+            const data = await response.json();
+            const { user, playlists, uploadedSongs } = data;
+
+            // Update profile info
+            document.getElementById('username').textContent = user.username;
+            document.getElementById('email').textContent = user.email;
+
+            // Update playlists
+            const playlistContainer = document.getElementById('playlistContainer');
+            playlists.forEach(playlist => {
+                const playlistDiv = document.createElement('div');
+                playlistDiv.classList.add('playlist');
+                playlistDiv.innerHTML = `
+                    <h3>${playlist.name}</h3>
+                    <a href="playlist.html?id=${playlist._id}">View Playlist</a>
+                `;
+                playlistContainer.appendChild(playlistDiv);
+            });
+
+            // Update uploaded songs
+            const uploadedSongsList = document.getElementById('uploadedSongsList');
+            uploadedSongs.forEach(song => {
+                const songLi = document.createElement('li');
+                songLi.textContent = song.name;
+                uploadedSongsList.appendChild(songLi);
+            });
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    }
+
+    // Call the fetchProfileData function when the page loads
+    window.onload = fetchProfileData;
+    
+
+    
+    document.getElementById('uploadSongForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent page reload
+
+        const form = document.getElementById('uploadSongForm');
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/songs/upload', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token') // Pass the user's token
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                document.getElementById('uploadMessage').textContent = 'Song uploaded successfully!';
+                document.getElementById('uploadMessage').style.color = 'green';
+
+                // Optionally, update the uploaded songs list dynamically
+                const uploadedSongsList = document.querySelector('.uploaded-songs ul');
+                const newSongLi = document.createElement('li');
+                newSongLi.textContent = `${result.song.title} - ${result.song.artist}`;
+                uploadedSongsList.appendChild(newSongLi);
+            } else if (response.status === 409) {
+                document.getElementById('uploadMessage').textContent = 'This song already exists!';
+            } else {
+                document.getElementById('uploadMessage').textContent = result.message || 'Failed to upload the song.';
+            }
+        } catch (error) {
+            console.error('Error uploading song:', error);
+            document.getElementById('uploadMessage').textContent = 'An error occurred while uploading the song.';
+        }
+    });
+
+</script>
 </body>
 </html>
+

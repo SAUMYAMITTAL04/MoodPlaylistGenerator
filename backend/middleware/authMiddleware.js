@@ -1,17 +1,26 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
+    // Extract token from Authorization header
     const authHeader = req.header('Authorization');
-    const token = req.header('x-auth-token') || (authHeader && authHeader.split(' ')[1]);
+    const token = authHeader && authHeader.split(' ')[1];  // Extract the token after 'Bearer'
 
     if (!token) {
         return res.status(401).json({ message: 'Authorization denied: No token provided' });
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);  // Match this to your JWT_SECRET
-        req.user = decoded;  // Attach the decoded payload to req.user
-        next();  // Continue to the next middleware/route handler
+        // Verify the token using the secret key
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        
+        // Log decoded token for debugging
+        console.log('Decoded token:', decoded);  // Check what the token contains
+        
+        // Attach user information from the decoded token to the request object
+        req.user = decoded;
+        
+        // Continue to the next middleware or route handler
+        next();
     } catch (error) {
         console.error('JWT Error:', error.message);  // Log error for debugging
         res.status(401).json({ message: 'Authorization denied: Invalid or expired token' });

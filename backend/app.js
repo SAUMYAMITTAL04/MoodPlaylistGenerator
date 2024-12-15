@@ -14,8 +14,16 @@ const verifyToken = require('./middleware/authMiddleware');
 
 const app = express();
 
+// CORS Configuration - Temporarily allow all origins for debugging
+const corsOptions = {
+    origin: '*',  // Allow all origins (for debugging purposes, you can narrow this down later)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions)); // Apply CORS globally
+
 // Middleware setup
-app.use(cors());
 app.use(express.json()); // Parse incoming JSON requests
 
 // Debugging: log the environment variables to check if they are loaded correctly
@@ -37,15 +45,33 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
         process.exit(1);
     });
 
-// Routes
-app.use('/api/auth', authRoutes);  // Auth routes for signup/login
-app.use('/api/mood', moodRoutes);  // Mood-based playlist routes
-app.use('/api/playlist', playlistRoutes);  // Playlist routes
+// Routes with Debug Logging
+app.use('/api/auth', (req, res, next) => {
+    console.log('Request to /api/auth:', req.method, req.url); // Debug log
+    next(); // Proceed with normal route handling
+}, authRoutes);
+
+app.use('/api/mood', (req, res, next) => {
+    console.log('Request to /api/mood:', req.method, req.url); // Debug log
+    next(); // Proceed with normal route handling
+}, moodRoutes);
+
+app.use('/api/playlist', (req, res, next) => {
+    console.log('Request to /api/playlist:', req.method, req.url); // Debug log
+    next(); // Proceed with normal route handling
+}, playlistRoutes);
 
 // Example protected route (for testing user profile access)
 app.get('/api/profile', verifyToken, (req, res) => {
+    console.log('Decoded user:', req.user);  // Check the decoded user from the token
     res.json({ message: 'User profile', user: req.user });
 });
+
+const songRoutes = require('./routes/songRoutes'); // Import the song routes
+
+// Add this line to register the song routes
+app.use('/api/songs', songRoutes);
+
 
 // Serve static files from the 'frontend' directory
 app.use(express.static(path.join(__dirname, '..', 'frontend')));

@@ -3,8 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist - Mood Playlist Generator</title>
+    <title>Your Profile - Mood Playlist Generator</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #7bd3ea;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+            margin-top: 20px;
+            border-bottom: 2px solid #7bd3ea;
+            padding-bottom: 5px;
+        }
+
+        p, li {
+            color: #666;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #7bd3ea;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,22 +94,33 @@
     </header>
 
     <main>
-        <h1>Your Playlist</h1>
-        <p>Here's your mood-based playlist.</p>
+        <h1>Your Profile</h1>
 
-        <ul id="playlist">
-            <li>Song 1 <button>Play</button></li>
-            <li>Song 2 <button>Play</button></li>
-        </ul>
+        <section>
+            <h2>Account Information</h2>
+            <p><strong>Username:</strong> user123</p>
+            <p><strong>Email:</strong> user123@example.com</p>
+        </section>
 
-        <h2>Download Songs</h2>
-        <button>Download Playlist</button>
+        <section>
+            <h2>Your Playlists</h2>
+            <ul>
+                <li><a href="playlist.html">Happy Playlist</a></li>
+                <li><a href="playlist.html">Sad Playlist</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uploaded Songs</h2>
+            <ul>
+                <li>Song 1</li>
+                <li>Song 2</li>
+            </ul>
+        </section>
     </main>
 
     <footer>
         <p>&copy; 2024 Mood Playlist Generator</p>
     </footer>
-
-    <script src="assets/js/app.js"></script>
 </body>
 </html>
