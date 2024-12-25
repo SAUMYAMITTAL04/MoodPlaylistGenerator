@@ -105,7 +105,25 @@
             background-color: #c6e7ff;
             color: #fff;
         }
+        .generate-playlist-btn {
+            background-color: #3e93e7; /* Matches the current link style */
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .generate-playlist-btn:hover {
+            background-color: #2b6ea8; /* Darker blue on hover */
+        }
+        .generate-playlist-btn:active {
+            background-color: #1f4e76; /* Even darker when clicked */
+            transform: scale(0.95); /* Slight scale effect */
+        }
 
+        
         /* Media Queries */
         @media (max-width: 768px) {
             .playlist {
@@ -144,40 +162,42 @@
         <section class="profile-header">
             <div class="profile-info">
                 <h1>Welcome, <span id="username">User123</span>!</h1>
+                <p><strong>Email:</strong> <span id="email"></span></p>
             </div>
         </section>
     
         <section class="playlists">
             <h2>Your Playlists</h2>
             <div class="playlist-container">
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="party">
                     <h3>Party</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="party">Generate Playlist</button>
                 </div>
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="hopeful">
                     <h3>Hopeful</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="hopeful">Generate Playlist</button>
                 </div>
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="nostalgic">
                     <h3>Nostalgic</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="nostalgic">Generate Playlist</button>
                 </div>
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="proud">
                     <h3>Proud</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="proud">Generate Playlist</button>
                 </div>
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="loving">
                     <h3>Loving</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="loving">Generate Playlist</button>
                 </div>
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="passionate">
                     <h3>Passionate</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="passionate">Generate Playlist</button>
                 </div>
-                <div class="playlist">
+                <div class="playlist mood-btn" data-mood="random">
                     <h3>Random</h3>
-                    <a href="playlist.html">View Playlist</a>
+                    <button class="generate-playlist-btn" data-mood="random">Generate Playlist</button>
                 </div>
+                
             </div>
         </section>
     
@@ -222,94 +242,7 @@
             <p>&copy; 2024 Mood Playlist Generator. All rights reserved.</p>
         </div>
     </footer>
-    <script >
-    async function fetchProfileData() {
-        try {
-            const response = await fetch('http://localhost:5000/api/profile', {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token') // Assuming JWT token is stored in localStorage
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch profile data');
-            }
-
-            const data = await response.json();
-            const { user, playlists, uploadedSongs } = data;
-
-            // Update profile info
-            document.getElementById('username').textContent = user.username;
-            document.getElementById('email').textContent = user.email;
-
-            // Update playlists
-            const playlistContainer = document.getElementById('playlistContainer');
-            playlists.forEach(playlist => {
-                const playlistDiv = document.createElement('div');
-                playlistDiv.classList.add('playlist');
-                playlistDiv.innerHTML = `
-                    <h3>${playlist.name}</h3>
-                    <a href="playlist.html?id=${playlist._id}">View Playlist</a>
-                `;
-                playlistContainer.appendChild(playlistDiv);
-            });
-
-            // Update uploaded songs
-            const uploadedSongsList = document.getElementById('uploadedSongsList');
-            uploadedSongs.forEach(song => {
-                const songLi = document.createElement('li');
-                songLi.textContent = song.name;
-                uploadedSongsList.appendChild(songLi);
-            });
-        } catch (error) {
-            console.error('Error fetching profile data:', error);
-        }
-    }
-
-    // Call the fetchProfileData function when the page loads
-    window.onload = fetchProfileData;
-    
-
-    
-    document.getElementById('uploadSongForm').addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent page reload
-
-        const form = document.getElementById('uploadSongForm');
-        const formData = new FormData(form);
-
-        try {
-            const response = await fetch('http://localhost:5000/api/songs/upload', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token') // Pass the user's token
-                }
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                document.getElementById('uploadMessage').textContent = 'Song uploaded successfully!';
-                document.getElementById('uploadMessage').style.color = 'green';
-
-                // Optionally, update the uploaded songs list dynamically
-                const uploadedSongsList = document.querySelector('.uploaded-songs ul');
-                const newSongLi = document.createElement('li');
-                newSongLi.textContent = `${result.song.title} - ${result.song.artist}`;
-                uploadedSongsList.appendChild(newSongLi);
-            } else if (response.status === 409) {
-                document.getElementById('uploadMessage').textContent = 'This song already exists!';
-            } else {
-                document.getElementById('uploadMessage').textContent = result.message || 'Failed to upload the song.';
-            }
-        } catch (error) {
-            console.error('Error uploading song:', error);
-            document.getElementById('uploadMessage').textContent = 'An error occurred while uploading the song.';
-        }
-    });
-
-</script>
+    <script src="assets/js/profile.js"></script>
 </body>
 </html>
 

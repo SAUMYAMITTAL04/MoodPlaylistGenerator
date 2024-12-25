@@ -1,6 +1,8 @@
 const express = require('express');
 const Playlist = require('../models/playlist');
+const Song = require('../models/song');  // Import the Song model
 const verifyToken = require('../middleware/authMiddleware'); // Protect the routes
+const moodController = require('../controllers/moodController');  // Import mood controller
 const router = express.Router();
 
 // Create a new playlist
@@ -20,6 +22,11 @@ router.post('/', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Error creating playlist', error: error.message });
     }
 });
+
+// Generate playlist based on mood (New route using controller)
+// Generate playlist based on mood
+router.post('/mood', verifyToken, moodController.generateMoodPlaylist);
+
 
 // Get all playlists for the logged-in user
 router.get('/', verifyToken, async (req, res) => {
@@ -69,18 +76,15 @@ router.put('/:id', verifyToken, async (req, res) => {
 // Delete a playlist
 router.delete('/:id', verifyToken, async (req, res) => {
     try {
-        console.log('Deleting playlist with ID:', req.params.id);  // Log the ID being requested for deletion
-        console.log('User ID:', req.user.userId);  // Log the user ID extracted from token
-
         const playlist = await Playlist.findOneAndDelete({ _id: req.params.id, user: req.user.userId });
-        
+
         if (!playlist) {
             return res.status(404).json({ message: 'Playlist not found' });
         }
 
         res.status(200).json({ message: 'Playlist deleted', playlist });
     } catch (error) {
-        console.error('Error deleting playlist:', error.message);  // Log the error for better debugging
+        console.error('Error deleting playlist:', error.message);
         res.status(500).json({ message: 'Error deleting playlist', error: error.message });
     }
 });

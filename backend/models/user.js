@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Define the User schema
 const userSchema = new mongoose.Schema({
   username: { 
     type: String, 
@@ -15,9 +16,19 @@ const userSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
-  playlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Playlist' }],
-  history: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }]
+  playlist: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Playlist' 
+  }],
+  history: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Song' 
+  }]
 }, { timestamps: true });
+
+// Optional: Adding indexes for quick lookup
+userSchema.index({ username: 1 });
+userSchema.index({ email: 1 });
 
 // Create the User model from the schema
 const User = mongoose.model('User', userSchema);

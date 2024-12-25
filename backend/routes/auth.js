@@ -5,6 +5,7 @@ const router = express.Router();
 
 // User Signup Route
 router.post('/signup', async (req, res) => {
+    console.log('Request Body in Signup:', req.body);
     const { username, email, password } = req.body;
 
     try {

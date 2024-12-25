@@ -20,9 +20,22 @@ const upload = multer({
         if (allowedTypes.includes(file.mimetype)) {
             cb(null, true);
         } else {
-            cb(new Error('Invalid file type. Only MP3 files are allowed.'));
+            const error = new Error('Invalid file type. Only MP3 files are allowed.');
+            error.status = 400; // Set a custom error status code
+            cb(error);
         }
     }
 });
+
+// Handle file upload errors globally
+upload.errors = (err, req, res, next) => {
+    if (err) {
+        if (err.status === 400) {
+            return res.status(400).json({ message: err.message });
+        }
+        return res.status(500).json({ message: 'Server error during file upload' });
+    }
+    next();
+};
 
 module.exports = upload;

@@ -8,6 +8,7 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const moodRoutes = require('./routes/mood');
 const playlistRoutes = require('./routes/playlist');
+const songRoutes = require('./routes/songRoutes');  // Import the song routes
 
 // Import middleware
 const verifyToken = require('./middleware/authMiddleware');
@@ -25,10 +26,6 @@ app.use(cors(corsOptions)); // Apply CORS globally
 
 // Middleware setup
 app.use(express.json()); // Parse incoming JSON requests
-
-// Debugging: log the environment variables to check if they are loaded correctly
-console.log('MONGODB_URI:', process.env.MONGODB_URI);
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
 
 // MongoDB URI from .env file
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -61,18 +58,16 @@ app.use('/api/playlist', (req, res, next) => {
     next(); // Proceed with normal route handling
 }, playlistRoutes);
 
+// Add this line to register the song routes
+app.use('/api/songs', songRoutes);
+
 // Example protected route (for testing user profile access)
 app.get('/api/profile', verifyToken, (req, res) => {
     console.log('Decoded user:', req.user);  // Check the decoded user from the token
     res.json({ message: 'User profile', user: req.user });
 });
 
-const songRoutes = require('./routes/songRoutes'); // Import the song routes
-
-// Add this line to register the song routes
-app.use('/api/songs', songRoutes);
-
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Serve static files from the 'frontend' directory
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 

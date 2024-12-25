@@ -50,64 +50,6 @@ document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
         console.error('Error during signup:', error);
     }
 });
-
-
-// Function to generate mood-based playlist
-async function generatePlaylist(mood) {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    try {
-        const response = await fetch(`http://localhost:5000/api/mood/${mood}`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` },
-        });
-
-        const playlist = await response.json();
-        if (response.ok) {
-            displayPlaylist(playlist);
-        } else {
-            alert(playlist.message);
-        }
-    } catch (error) {
-        console.error('Error fetching playlist:', error);
-    }
-}
-
-// Function to display the playlist
-function displayPlaylist(playlist) {
-    const playlistContainer = document.getElementById('playlistContainer');
-    playlistContainer.innerHTML = ''; // Clear previous playlist
-
-    if (playlist.length === 0) {
-        playlistContainer.innerHTML = '<p>No songs found for this mood.</p>';
-        return;
-    }
-
-    playlist.forEach(song => {
-        const songElement = document.createElement('div');
-        songElement.classList.add('song');
-        songElement.innerHTML = `
-            <h3>${song.title}</h3>
-            <p>Artist: ${song.artist}</p>
-            <p>Film: ${song.film}</p>
-            <p>Genre: ${song.genre}</p>
-            <button onclick="playSong('${song.filePath}')">Play</button>
-        `;
-        playlistContainer.appendChild(songElement);
-    });
-}
-
-// Function to play a song
-function playSong(filePath) {
-    const audioPlayer = document.getElementById('audioPlayer');
-    audioPlayer.src = filePath;
-    audioPlayer.play();
-}
-
 // Function to logout
 function logout() {
     localStorage.removeItem('token');
@@ -118,19 +60,20 @@ function logout() {
 document.addEventListener('DOMContentLoaded', () => {
     const pathname = window.location.pathname;
 
+    // If on the profile page, the profile data will be loaded automatically from profile.js
     if (pathname.includes('profile.html')) {
-        loadProfile(); // Load profile if on profile page
+        // loadProfile() is called in profile.js, no need for it here
     }
 
-    // Attach mood button event listeners
+    // Attach logout functionality
+    document.getElementById('logoutButton')?.addEventListener('click', logout);
+
+    // Attach mood button event listeners for pages like the homepage
     const moodButtons = document.querySelectorAll('.mood-button');
     moodButtons.forEach(button => {
         button.addEventListener('click', () => {
             const mood = button.dataset.mood;
-            generatePlaylist(mood);
+            generatePlaylist(mood); // This uses the function from profile.js to generate the playlist
         });
     });
-
-    // Attach logout functionality
-    document.getElementById('logoutButton')?.addEventListener('click', logout);
 });
