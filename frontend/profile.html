@@ -5,7 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile - Mood Playlist Generator</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
     <style>
+        .social-links {
+            margin-top: 10px;
+        }
+        
+        .social-links a {
+            margin: 0 15px;
+        }
+        
+        .social-links img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links img:hover {
+            transform: scale(1.2);
+        }
+        h2{
+            color: #f1f1f1;
+        }
+        body {
+            
+            background-image: url(assets/images/intense.jpg);
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Keeps the image centered */
+            background-repeat: no-repeat; 
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -103,6 +131,7 @@
             text-align: center;
             padding: 10px;
             background-color: #c6e7ff;
+            background-image: url(assets/images/blue\ flowers.jpg);
             color: #fff;
         }
         .generate-playlist-btn {
@@ -193,53 +222,23 @@
                     <h3>Passionate</h3>
                     <button class="generate-playlist-btn" data-mood="passionate">Generate Playlist</button>
                 </div>
-                <div class="playlist mood-btn" data-mood="random">
-                    <h3>Random</h3>
-                    <button class="generate-playlist-btn" data-mood="random">Generate Playlist</button>
-                </div>
+                
                 
             </div>
         </section>
     
-        <section class="uploaded-songs">
-            <h2>Your Uploaded Songs</h2>
-            <ul>
-                <li>Song 1</li>
-                <li>Song 2</li>
-                <li>Song 3</li>
-                <li>Song 4</li>
-                <li>Song 5</li>
-            </ul>
-        </section>
-        <section class="upload-song">
-            <h2>Upload a New Song</h2>
-            <form id="uploadSongForm" enctype="multipart/form-data">
-                <div>
-                    <label for="songTitle">Title:</label>
-                    <input type="text" id="songTitle" name="title" required>
-                </div>
-                <div>
-                    <label for="songArtist">Artist:</label>
-                    <input type="text" id="songArtist" name="artist" required>
-                </div>
-                <div>
-                    <label for="songMood">Mood:</label>
-                    <input type="text" id="songMood" name="mood" required>
-                </div>
-                <div>
-                    <label for="songFile">MP3 File:</label>
-                    <input type="file" id="songFile" name="file" accept=".mp3" required>
-                </div>
-                <button type="submit">Upload Song</button>
-            </form>
-            <p id="uploadMessage" style="color: red;"></p>
-        </section>
+        
+        
         
     </main>
     
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 Mood Playlist Generator. All rights reserved.</p>
+    
+    <footer class="footer-container">
+        <p>&copy; 2024 Mood Playlist Generator</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com"><img src="assets/images/facebook.avif" alt="Facebook"></a>
+            <a href="https://www.twitter.com"><img src="assets/images/x logo.avif" alt="Twitter"></a>
+            <a href="https://www.instagram.com"><img src="assets/images/insta logo.webp" alt="Instagram"></a>
         </div>
     </footer>
     <script src="assets/js/profile.js"></script>

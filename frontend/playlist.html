@@ -5,7 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile - Mood Playlist Generator</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
     <style>
+        
+        .social-links {
+            margin-top: 10px;
+        }
+        
+        .social-links a {
+            margin: 0 15px;
+        }
+        
+        .social-links img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-links img:hover {
+            transform: scale(1.2);
+        }
+        h1,h2{
+            color: #f9f9f9;
+        }
+        .playlists{
+            color: #f1f1f1;
+        }
+        body {
+            
+            background-image: url(assets/images/intense.jpg);
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Keeps the image centered */
+            background-repeat: no-repeat; 
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -93,7 +125,7 @@
             margin-top: 20px;
             text-align: center;
             padding: 10px;
-            background-color: #c6e7ff;
+            background-image: url(assets/images/blue\ flowers.jpg);
             color: #fff;
         }
         
@@ -219,9 +251,12 @@
         
     </main>
     
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2024 Mood Playlist Generator. All rights reserved.</p>
+    <footer class="footer-container">
+        <p>&copy; 2024 Mood Playlist Generator</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com"><img src="assets/images/facebook.avif" alt="Facebook"></a>
+            <a href="https://www.twitter.com"><img src="assets/images/x logo.avif" alt="Twitter"></a>
+            <a href="https://www.instagram.com"><img src="assets/images/insta logo.webp" alt="Instagram"></a>
         </div>
     </footer>
     <script src="assets/js/profile.js"></script>
